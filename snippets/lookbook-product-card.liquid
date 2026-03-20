@@ -1,0 +1,31 @@
+{% liquid
+  if settings.currency_code_enabled_product_cards
+    assign price_min = featured.price_min | money_with_currency
+  else
+    assign price_min = featured.price_min | money
+  endif
+
+  if featured.price_varies
+    assign price_from_text = 'content.price_from' | t: price: '__PRICE__'
+    assign display_price = price_from_text | replace: '__PRICE__', price_min
+  endif
+%}
+
+<a class="lookbook_product--container" href="{{ featured.url }}">
+  <div class="lookbook_product--image-container">
+    <img src="{{ featured.featured_image.src | image_url: width: 700 }}" width="700" height="500">
+  </div>
+  <div class="lookbook_product--info">
+    <h3>
+      {{ featured.title }}
+    </h3>
+    <div class="lookbook_product--info-metadata">
+      <h5>{{ featured.vendor }}</h5>
+      {% if featured.price_varies and has_swatches_only == false and price_min != blank %}
+        <span class="price">{{ display_price }}</span>
+      {% else %}
+        {% render 'price', show_unit_price: true, show_sale_price_first: true, product_resource: featured %}
+      {% endif %}
+    </div>
+  </div>
+</a>

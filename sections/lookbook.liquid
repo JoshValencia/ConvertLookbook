@@ -1,9 +1,42 @@
-<section></section>
+<section>
+  <div class="lookbook_header--container">
+    <div class="lookbook_header--heading">
+      <h2>The 2025</h2>
+      <h2>Archive</h2>
+    </div>
+    <div class="lookbook_header--subheaders">
+      <p class="lookbook-description--desktop">{{ section.settings.lookbook.description.value }}</p>
+      <h5>{{ section.settings.lookbook.title.value }}</h5>
+      <h4>01-05 Series</h4>
+    </div>
+  </div>
+  <p class="lookbook-description--mobile">{{ section.settings.lookbook.description.value }}</p>
+  <div class="lookbook_products--container">
+    <div class="splide">
+      <div class="splide__track">
+        <ul class="splide__list">
+          {% for featured_product in section.settings.lookbook.products.value %}
+            <li class="splide__slide">
+              {% render 'lookbook-product-card', featured: featured_product %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="custom-splide-controllers--container">
+        <div class="splide__arrows"></div>
+        <div class="custom-splide-progress">
+          <div class="custom-splide-progress-bar"></div>
+        </div>
+        <p>SCROLL TO DISCOVER</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% schema %}
 {
   "name": "Lookbook",
-  "class": "lookbook",
+  "class": "section lookbook",
   "settings": [
     {
       "type": "metaobject",
