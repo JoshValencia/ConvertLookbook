@@ -42,10 +42,10 @@ sections/
 
 snippets/
   lookbook-product-card.liquid   # Product card used inside the Lookbook carousel
-```
+
 assets/
   custom.js   # Splide Configuration
-```
+
 assets/
   custom.css   # Lookbook section's CSS styling
 ```
