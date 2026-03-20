@@ -1,37 +1,57 @@
-<section>
-  <div class="lookbook_header--container">
-    <div class="lookbook_header--heading">
-      <h2>The 2025</h2>
-      <h2>Archive</h2>
-    </div>
-    <div class="lookbook_header--subheaders">
-      <p class="lookbook-description--desktop">{{ section.settings.lookbook.description.value }}</p>
-      <h5>{{ section.settings.lookbook.title.value }}</h5>
-      <h4>01-05 Series</h4>
-    </div>
-  </div>
-  <p class="lookbook-description--mobile">{{ section.settings.lookbook.description.value }}</p>
-  <div class="lookbook_products--container">
-    <div class="splide">
-      <div class="splide__track">
-        <ul class="splide__list">
-          {% for featured_product in section.settings.lookbook.products.value %}
-            <li class="splide__slide">
-              {% render 'lookbook-product-card', featured: featured_product %}
-            </li>
-          {% endfor %}
-        </ul>
+{% liquid
+  assign display_lookbook = true
+  if product != blank
+    assign is_matched = false
+    for p in section.settings.lookbook.products.value
+      if p.id == product.id
+        assign is_matched = true
+      endif
+    endfor
+    if is_matched == false
+      assign display_lookbook = false
+    endif
+  endif
+  if section.settings.lookbook == blank
+    assign display_lookbook = false
+  endif
+%}
+
+{% if display_lookbook %}
+  <section>
+    <div class="lookbook_header--container">
+      <div class="lookbook_header--heading">
+        <h2>{{ section.settings.heading_line_1 }}</h2>
+        <h2>{{ section.settings.heading_line_2 }}</h2>
       </div>
-      <div class="custom-splide-controllers--container">
-        <div class="splide__arrows"></div>
-        <div class="custom-splide-progress">
-          <div class="custom-splide-progress-bar"></div>
+      <div class="lookbook_header--subheaders">
+        <p class="lookbook-description--desktop">{{ section.settings.lookbook.description.value }}</p>
+        <h5>{{ section.settings.lookbook.title.value }}</h5>
+        <h4>{{ section.settings.series_label }}</h4>
+      </div>
+    </div>
+    <p class="lookbook-description--mobile">{{ section.settings.lookbook.description.value }}</p>
+    <div class="lookbook_products--container">
+      <div class="splide">
+        <div class="splide__track">
+          <ul class="splide__list">
+            {% for featured_product in section.settings.lookbook.products.value %}
+              <li class="splide__slide">
+                {% render 'lookbook-product-card', featured: featured_product %}
+              </li>
+            {% endfor %}
+          </ul>
         </div>
-        <p>SCROLL TO DISCOVER</p>
+        <div class="custom-splide-controllers--container">
+          <div class="splide__arrows"></div>
+          <div class="custom-splide-progress">
+            <div class="custom-splide-progress-bar"></div>
+          </div>
+          <p>{{ section.settings.scroll_label }}</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+{% endif %}
 
 {% schema %}
 {
@@ -43,6 +63,42 @@
       "id": "lookbook",
       "label": "Select Lookbook",
       "metaobject_type": "lookbook"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading Line 1",
+      "default": "The 2026"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading Line 2",
+      "default": "Archive"
+    },
+    {
+      "type": "header",
+      "content": "Subheader"
+    },
+    {
+      "type": "text",
+      "id": "series_label",
+      "label": "Series Label",
+      "default": "01-05 Series"
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Scroll CTA Text",
+      "default": "SCROLL TO DISCOVER"
     }
   ],
   "presets": [
