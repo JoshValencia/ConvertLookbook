@@ -415,7 +415,11 @@
       "type": "lookbook",
       "name": "Lookbook",
       "settings": {
-        "lookbook": "snowboards"
+        "lookbook": "snowboards",
+        "heading_line_1": "The 2026",
+        "heading_line_2": "Archive",
+        "series_label": "01-05 Series",
+        "scroll_label": "SCROLL TO DISCOVER"
       }
     }
   },
